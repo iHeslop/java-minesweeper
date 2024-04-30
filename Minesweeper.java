@@ -3,15 +3,17 @@ import java.util.Scanner;
 public class Minesweeper {
     private Board board;
     private Scanner scanner;
-    String acceptableChars = "ABCDEFGHIJ";
+    String acceptableChars;
+    int safeSquaresRemaining;
 
     public Minesweeper(int width, int bombAmount) {
         this.board = new Board(width, bombAmount);
         this.scanner = new Scanner(System.in);
+        this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
+        this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
     }
 
     public void playGame() {
-        int safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
 
         while (true) {
             printGrid();
@@ -40,12 +42,14 @@ public class Minesweeper {
                 }
             }
 
+            // Check for loss condition
             if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
                 System.out.println("Boom! You hit a mine. Game Over!");
                 break;
             }
             revealSquare(row, col);
-            safeSquaresRemaining--;
+
+            // Check for win condition
             if (safeSquaresRemaining == 0) {
                 System.out.println("Congratulations! You've won the game!");
                 break;
@@ -54,8 +58,13 @@ public class Minesweeper {
         scanner.close();
     }
 
+    // Print grid to console
     private void printGrid() {
-        System.out.println("  A B C D E F G H I J");
+        System.out.print("  ");
+        for (int i = 0; i < acceptableChars.length(); i++) {
+            System.out.print(acceptableChars.charAt(i) + " ");
+        }
+        System.out.println();
         for (int i = 0; i < board.getWidth(); i++) {
             System.out.print(i + " ");
             for (int j = 0; j < board.getWidth(); j++) {
@@ -70,6 +79,7 @@ public class Minesweeper {
         }
     }
 
+    // Check square method to check reveal square content
     private void revealSquare(int row, String col) {
         // If square already revealed just return
         if (board.getGrid()[row][acceptableChars.indexOf(col)].isRevealed()) {
@@ -78,7 +88,7 @@ public class Minesweeper {
 
         // Set revealed to true for chosen square
         board.getGrid()[row][acceptableChars.indexOf(col)].setRevealed(true);
-
+        safeSquaresRemaining--;
         // If cell has no adjacent bombs, we reveal adjacent cells recursively
         if (board.getGrid()[row][acceptableChars.indexOf(col)].getAdjacentBombs() == 0) {
             for (int i = row - 1; i <= row + 1; i++) {
@@ -92,7 +102,35 @@ public class Minesweeper {
     }
 
     public static void main(String[] args) {
-        Minesweeper game = new Minesweeper(10, 20);
+        // Added user ability to choose game size and bomb amount
+        Scanner scanner = new Scanner(System.in);
+
+        int width;
+        while (true) {
+            System.out.print("Enter the width of the board (max. 26): ");
+            width = scanner.nextInt();
+            if (width <= 0 || width > 26) {
+                System.out.println("Width must be between 1 and 26. Please try again.");
+            } else {
+                break;
+            }
+        }
+
+        int maxBombs = width * width - 1;
+        int bombAmount;
+
+        while (true) {
+            System.out.print("Enter the number of bombs (max. " + maxBombs + "): ");
+            bombAmount = scanner.nextInt();
+            if (bombAmount <= 0 || bombAmount > maxBombs) {
+                System.out.println("Number of bombs must be between 1 and " + maxBombs + ". Please try again.");
+            } else {
+                break;
+            }
+        }
+
+        Minesweeper game = new Minesweeper(width, bombAmount);
         game.playGame();
+        scanner.close();
     }
 }

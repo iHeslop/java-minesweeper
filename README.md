@@ -35,7 +35,7 @@ Recreate a **simplified** version of the game Minesweeper to be played in the ja
 ## Tips
 
 - This can be done in a single file, but try and think in terms of OOP
-- Think about the kind of classes that might reprepsent the state of the game, board, cells etc
+- Think about the kind of classes that might represent the state of the game, board, cells etc
 - A good challenge would be to see how much you can abstract the logic, so that the game code would work with different inputs, i.e GUI or from web.
 
 
