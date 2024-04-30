@@ -10,7 +10,32 @@ public class Minesweeper {
     }
 
     public void playGame() {
-        printGrid();
+        while (true) {
+            printGrid();
+            String acceptableChars = "ABCDEFGHIJ";
+            System.out.print("Enter column coordinate (letters): ");
+            String col = scanner.nextLine();
+            if (!acceptableChars.contains(col.toUpperCase())) {
+                System.out.println("Invalid coordinate. Please try again.");
+            } else {
+                System.out.println(col);
+            }
+
+            System.out.print("Enter row coordinate (numbers): ");
+            int row = scanner.nextInt();
+            if (row < 0 || row >= board.getWidth()) {
+                System.out.println("Invalid coordinate. Please try again.");
+            } else {
+                System.out.println(row);
+                continue;
+            }
+            if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
+                System.out.println("Boom! You hit a mine. Game Over!");
+                break;
+            }
+            // revealSquare(row, col);
+        }
+        scanner.close();
     }
 
     private void printGrid() {
