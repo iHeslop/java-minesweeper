@@ -11,6 +11,8 @@ public class Minesweeper {
     }
 
     public void playGame() {
+        int safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
+
         while (true) {
             printGrid();
 
@@ -43,6 +45,11 @@ public class Minesweeper {
                 break;
             }
             revealSquare(row, col);
+            safeSquaresRemaining--;
+            if (safeSquaresRemaining == 0) {
+                System.out.println("Congratulations! You've won the game!");
+                break;
+            }
         }
         scanner.close();
     }

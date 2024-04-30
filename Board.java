@@ -16,6 +16,10 @@ public class Board {
         return width;
     }
 
+    public int getBombAmount() {
+        return bombAmount;
+    }
+
     public Square[][] getGrid() {
         return grid;
     }
