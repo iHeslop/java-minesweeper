@@ -40,6 +40,25 @@ public class Board {
             }
         }
 
-        // need to calculate adjacent bombs math here
+        // Calculate adjacent bomb count for each square
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                int adjacentBombs = countAdjacentBombs(i, j);
+                grid[i][j].setAdjacentBombs(adjacentBombs);
+            }
+        }
+    }
+
+    // Count adjacent bombs
+    private int countAdjacentBombs(int row, int col) {
+        int count = 0;
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (i >= 0 && i < width && j >= 0 && j < width && grid[i][j].hasBomb()) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
