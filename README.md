@@ -6,14 +6,14 @@ This is a simplified version of the Minesweeper game played in the command line.
 
 ### Features:
 
-- *Functional Game:* This is a fully functional minesweeper to be played within the CLI.
-- *Check Grid:* Ability for the user to select a column and row to check for a mine.
-- *Recursive Reveal:* Grid will recursively reveal squares that do not contain a mine within close proximity, just as what happens in the actual game.
-- *Wins and Losses:* Game will end if a bomb is selected, and if all squares are revealed that do not contain bombs, the game counts as a win. This is then recorded and written into a continually updated win/loss file for tracking. 
-- *User Flexibility:* Ability to choose grid width, as well as bomb amount before generating the grid. This allows for different difficulties and levels of adaptation of the game. 
+- **Functional Game:** This is a fully functional minesweeper to be played within the CLI.
+- **Check Grid:** Ability for the user to select a column and row to check for a mine.
+- **Recursive Reveal:** Grid will recursively reveal squares that do not contain a mine within close proximity, just as what happens in the actual game.
+- **Wins and Losses:** Game will end if a bomb is selected, and if all squares are revealed that do not contain bombs, the game counts as a win. This is then recorded and written into a continually updated win/loss file for tracking. 
+- **User Flexibility:** Ability to choose grid width, as well as bomb amount before generating the grid. This allows for different difficulties and levels of adaptation of the game. 
 
 ### Technologies:
-- *Java*
+- **Java**
 
 ### Potential Future Additions: 
 - Add a Graphical User Interface.
