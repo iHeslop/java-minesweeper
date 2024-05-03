@@ -1,16 +1,50 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Minesweeper {
     private Board board;
     private Scanner scanner;
     String acceptableChars;
     int safeSquaresRemaining;
+    int wins;
+    int losses;
+    File winLossFile;
 
     public Minesweeper(int width, int bombAmount) {
         this.board = new Board(width, bombAmount);
         this.scanner = new Scanner(System.in);
         this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
         this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
+        this.winLossFile = new File("winloss.txt");
+        readWinLossFromFile();
+    }
+
+    private void readWinLossFromFile() {
+        try {
+            Scanner fileScanner = new Scanner(winLossFile);
+            String winsLine = fileScanner.nextLine();
+            String lossesLine = fileScanner.nextLine();
+            wins = Integer.parseInt(winsLine.split(": ")[1]);
+            losses = Integer.parseInt(lossesLine.split(": ")[1]);
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            wins = 0;
+            losses = 0;
+        }
+    }
+
+    private void updateWinLossToFile() {
+        try {
+            FileWriter fileWriter = new FileWriter(winLossFile);
+            fileWriter.write("Total wins: " + wins + "\n");
+            fileWriter.write("Total losses: " + losses);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void playGame() {
@@ -45,6 +79,8 @@ public class Minesweeper {
             // Check for loss condition
             if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
                 System.out.println("Boom! You hit a mine. Game Over!");
+                losses++;
+                updateWinLossToFile();
                 break;
             }
             revealSquare(row, col);
@@ -52,6 +88,8 @@ public class Minesweeper {
             // Check for win condition
             if (safeSquaresRemaining == 0) {
                 System.out.println("Congratulations! You've won the game!");
+                wins++;
+                updateWinLossToFile();
                 break;
             }
         }
