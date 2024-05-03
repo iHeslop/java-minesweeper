@@ -1,60 +1,22 @@
-# Project: Minesweeper DUE MONDAY 6th MAY
+# Java CLI Minesweeper
 
-## MVP
+## Description:
 
-Recreate a **simplified** version of the game Minesweeper to be played in the java console
+This is a simplified version of the Minesweeper game played in the command line. The game has the ability to check squares within a grid, with squares revealing their proximity to mines, as well as clearing recursively if there are no mines nearby. The results are also recorded in a win / loss file to keep track of your success. There is also the ability to choose the width of the grid, as well as the number of mines within the grid. 
 
-- The game should be able to randomly generate 10 mines in a 10x10 grid
-  - 2 Dimensional Array
-- The application should "draw" the grid every turn by printing to the console
-  - System.out
-- The user will be able to enter a command that represents a coordinate to check a location for a mine
+### Features:
 
-  - Use Scanner with system in
+- *Functional Game:* This is a fully functional minesweeper to be played within the CLI.
+- *Check Grid:* Ability for the user to select a column and row to check for a mine.
+- *Recursive Reveal:* Grid will recursively reveal squares that do not contain a mine within close proximity, just as what happens in the actual game.
+- *Wins and Losses:* Game will end if a bomb is selected, and if all squares are revealed that do not contain bombs, the game counts as a win. This is then recorded and written into a continually updated win/loss file for tracking. 
+- *User Flexibility:* Ability to choose grid width, as well as bomb amount before generating the grid. This allows for different difficulties and levels of adaptation of the game. 
 
-- The application will display a number from 0-8 depending on how many mines surround that location
+### Technologies:
+- *Java*
 
-- If the user selects a mine, the game will respond "boom!" and the game will be lost
+### Potential Future Additions: 
+- Add a Graphical User Interface.
+- Add the ability to place flags to mark potential bomb locations. 
+- Add a timer.
 
-- If every non-mine square has been revealed, the game is won
-
-- Render the grid to the console after every user command
-
-## Bonuses (optional)
-
-- Allow for the user to configure number of mines and grid size
-
-  - via a configuration.json file
-  - OR command line arguments
-  - OR interactive menu at start of game
-
-- Use a file to track wins and losses
-
-- (Difficult) Discovering an empty square should reveal all squares around it, and cascade into other nearby empty squares
-
-## Tips
-
-- This can be done in a single file, but try and think in terms of OOP
-- Think about the kind of classes that might represent the state of the game, board, cells etc
-- A good challenge would be to see how much you can abstract the logic, so that the game code would work with different inputs, i.e GUI or from web.
-
-
-### FUNCTIONS/COMPONENTS: 
-- Square 
-  - hasBomb
-  - setBomb
-  - isRevealed
-  - setRevealed
-  - getAdjacentBombs
-  - setAdjacentBombs
-
-- Board 
-  - createBoard
-  - countAdjacentBombs
-  - getGrid
-  - getWidth
- 
-- Minesweeper
-  - playGame
-  - printGrid
-  - revealSquare
