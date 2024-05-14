@@ -13,6 +13,7 @@ public class FileHandler {
         this.winLossFile = new File(filePath);
     }
 
+    // Reads current wins and losses from file and saves in variables
     public int[] readWinLossFromFile() {
         int[] winLossData = new int[2];
         try {
@@ -30,6 +31,7 @@ public class FileHandler {
         return winLossData;
     }
 
+    // Updates results file with current wins and losses at end of game
     public void updateWinLossToFile(int wins, int losses) {
         try {
             FileWriter fileWriter = new FileWriter(winLossFile);

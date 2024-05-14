@@ -9,6 +9,7 @@ public class InputHandler implements InputInterface {
         this.scanner = new Scanner(System.in);
     }
 
+    // Get an input thats a string with error handling in case of bad input
     @Override
     public String getInputString(String prompt) {
         while (true) {
@@ -22,6 +23,7 @@ public class InputHandler implements InputInterface {
         }
     }
 
+    // Get an input thats a number with error handling in case of bad input
     @Override
     public int getInputInt(String prompt) {
         while (true) {

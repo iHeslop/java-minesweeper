@@ -20,6 +20,7 @@ public class Minesweeper {
         // Game functionality
         Game game = new Game(inputHandler);
 
+        // Start menu loop
         while (true) {
             int choice = game.startMenu();
             switch (choice) {
@@ -60,6 +61,7 @@ public class Minesweeper {
                         }
                     }
 
+                    // PLAY GAME IS CALLED HERE
                     game.playGame(width, bombAmount);
                     return;
                 case 3:

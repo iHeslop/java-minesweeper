@@ -13,6 +13,7 @@ public class Square {
         this.flagged = false;
     }
 
+    // Flag Methods
     public boolean isFlagged() {
         return flagged;
     }
@@ -21,6 +22,7 @@ public class Square {
         flagged = !flagged;
     }
 
+    // Bomb Methods
     public boolean hasBomb() {
         return hasBomb;
     }
@@ -29,6 +31,7 @@ public class Square {
         this.hasBomb = hasBomb;
     }
 
+    // Revealed Methods
     public boolean isRevealed() {
         return revealed;
     }
@@ -37,6 +40,7 @@ public class Square {
         this.revealed = revealed;
     }
 
+    // Adjacent Bomb methods
     public int getAdjacentBombs() {
         return adjacentBombs;
     }

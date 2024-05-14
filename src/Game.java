@@ -22,6 +22,7 @@ public class Game {
         fileHandler.updateWinLossToFile(wins, losses);
     }
 
+    // Start Program with Menu
     public int startMenu() {
         System.out.println("\nMenu:");
         System.out.println("1. View Results");
@@ -31,6 +32,7 @@ public class Game {
         return inputInterface.getInputInt("Enter your choice: ");
     }
 
+    // View Results in CLI
     public void viewResults() {
         System.out.println("\n-------------------------------------------");
         System.out.println("Results:");
