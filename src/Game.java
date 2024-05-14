@@ -28,6 +28,7 @@ public class Game {
 
     public void playGame() {
         while (true) {
+            System.out.println("\n-------------------------------------------");
             printGrid();
 
             // Loop for column coordinate input
@@ -73,13 +74,13 @@ public class Game {
 
     // Print grid to console
     private void printGrid() {
-        System.out.print("\n  ");
+        System.out.print("\n   ");
         for (int i = 0; i < acceptableChars.length(); i++) {
             System.out.print(acceptableChars.charAt(i) + " ");
         }
         System.out.println();
         for (int i = 0; i < board.getWidth(); i++) {
-            System.out.print(i + " ");
+            System.out.print(i + "  ");
             for (int j = 0; j < board.getWidth(); j++) {
                 Square square = board.getGrid()[i][j];
                 if (square.isRevealed()) {
@@ -90,7 +91,7 @@ public class Game {
             }
             System.out.println();
         }
-        System.out.print("\nSafe squares Remaining: " + safeSquaresRemaining + "\n");
+        System.out.print("\nSafe squares remaining: " + safeSquaresRemaining + "\n");
     }
 
     // Check square method to check reveal square content

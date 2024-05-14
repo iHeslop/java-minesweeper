@@ -13,7 +13,8 @@ public class Minesweeper {
                         "/\\_____\\ \\_\\ \\_\\ \\__| \\ \\_\\ \\_\\    \\ \\_\\ \\ \\_\\ \\_\\ \\_\\\\\"\\_\\ \\_____\\/\\_____\\ \\__/\".~\\_\\ \\_____\\ \\_____\\ \\_\\  \\ \\_____\\ \\_\\ \\_\\ \r\n"
                         + //
                         "\\/_____/\\/_/\\/_/\\/_/   \\/_/\\/_/     \\/_/  \\/_/\\/_/\\/_/ \\/_/\\/_____/\\/_____/\\/_/   \\/_/\\/_____/\\/_____/\\/_/   \\/_____/\\/_/ /_/  \n");
-        System.out.println("Welcome to Java CLI Minesweeper! \n");
+        System.out.println("**Welcome to Java CLI Minesweeper**");
+        System.out.println("!Reveal all bomb-less cells to win! \n");
         // Set grid width
         int width = 0;
         while (true) {
@@ -40,6 +41,14 @@ public class Minesweeper {
 
         // Game functionality
         Game game = new Game(width, bombAmount, inputHandler);
+        System.out.println("\n-------------------------------------------");
+        System.out.println("\r\n" + //
+                "   __   ______________  ___  __   _____  __\r\n" + //
+                "  / /  / __/_  __/ __/ / _ \\/ /  / _ \\ \\/ /\r\n" + //
+                " / /__/ _/  / / _\\ \\  / ___/ /__/ __ |\\  / \r\n" + //
+                "/____/___/ /_/ /___/ /_/  /____/_/ |_|/_/  \r\n" + //
+                "                                           \r" + //
+                "");
         game.playGame();
         inputHandler.closeScanner();
     }
