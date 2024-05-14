@@ -109,6 +109,7 @@ public class Game {
 
             // Check for win condition
             if (safeSquaresRemaining == 0) {
+                System.out.println("\n-------------------------------------------");
                 System.out.println("\r\n" + //
                         " __  __  ______  __  __       __     __  __  __   __    \r\n" + //
                         "/\\ \\_\\ \\/\\  __ \\/\\ \\/\\ \\     /\\ \\  _ \\ \\/\\ \\/\\ \"-.\\ \\   \r\n" + //
@@ -118,6 +119,7 @@ public class Game {
                         "                                                        \r\n" + //
                         "");
                 System.out.println("Congratulations! You've won the game!\n");
+                System.out.println("\n-------------------------------------------");
                 wins++;
                 updateWinLossToFile();
                 break;
