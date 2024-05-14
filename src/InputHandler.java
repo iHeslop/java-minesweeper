@@ -12,7 +12,7 @@ public class InputHandler implements InputInterface {
     @Override
     public String getInputString(String prompt) {
         System.out.print(prompt);
-        return scanner.nextLine();
+        return scanner.nextLine().toUpperCase();
     }
 
     @Override

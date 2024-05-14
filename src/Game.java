@@ -31,11 +31,28 @@ public class Game {
             System.out.println("\n-------------------------------------------");
             printGrid();
 
-            // Loop for column coordinate input
-            String col = inputInterface.getInputString("\nEnter column coordinate (letters): ");
+            String col;
+            int row;
 
-            // Loop for row coordinate input
-            int row = inputInterface.getInputInt("\nEnter row coordinate (numbers): ");
+            // Loop for column coordinate input
+            while (true) {
+                col = inputInterface.getInputString("\nEnter column coordinate (letters): ");
+                if (acceptableChars.contains(col)) {
+                    break; // Valid input, exit loop
+                } else {
+                    System.out.println("Invalid column coordinate. Please enter a valid column coordinate.");
+                }
+            }
+
+            // Loop until valid input for row coordinate is provided
+            while (true) {
+                row = inputInterface.getInputInt("\nEnter row coordinate (numbers): ");
+                if (row >= 0 && row < board.getWidth()) {
+                    break; // Valid input, exit loop
+                } else {
+                    System.out.println("Invalid row coordinate. Please enter a valid row coordinate.");
+                }
+            }
 
             // Check for loss condition
             if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
