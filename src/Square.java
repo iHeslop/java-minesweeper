@@ -3,12 +3,22 @@ package src;
 public class Square {
     private boolean hasBomb;
     private boolean revealed;
+    private boolean flagged;
     private int adjacentBombs;
 
     public Square() {
         this.hasBomb = false;
         this.revealed = false;
         this.adjacentBombs = 0;
+        this.flagged = false;
+    }
+
+    public boolean isFlagged() {
+        return flagged;
+    }
+
+    public void toggleFlag() {
+        flagged = !flagged;
     }
 
     public boolean hasBomb() {

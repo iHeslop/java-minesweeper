@@ -50,6 +50,7 @@ public class Game {
 
             String col;
             int row;
+            String action;
 
             // Loop for column coordinate input
             while (true) {
@@ -71,22 +72,38 @@ public class Game {
                 }
             }
 
-            // Check for loss condition
-            if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
-                System.out.println("\n          _ ._  _ , _ ._\r\n" + //
-                        "        (_ ' ( `  )_  .__)\r\n" + //
-                        "      ( (  (    )   `)  ) _)\r\n" + //
-                        "     (__ (_   (_ . _) _) ,__)\r\n" + //
-                        "         `~~`\\ ' . /`~~`\r\n" + //
-                        "              ;   ;\r\n" + //
-                        "              /   \\\r\n" + //
-                        "_____________/_ __ \\_____________");
-                System.out.println("\nBoom! You hit a mine. Game Over!\n");
-                losses++;
-                updateWinLossToFile();
-                break;
+            // Loop until valid input for action is provided
+            while (true) {
+                action = inputInterface.getInputString("\nEnter 'R' to reveal or 'F' to flag: ");
+                if (action.equals("R") || action.equals("F")) {
+                    break; // Valid input, exit loop
+                } else {
+                    System.out.println("Invalid action. Please enter 'R' to reveal or 'F' to flag.");
+                }
             }
-            revealSquare(row, col);
+
+            // Perform action based on user input
+            if (action.equals("R")) {
+                // Check for loss condition
+                if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
+                    System.out.println("\n          _ ._  _ , _ ._\r\n" + //
+                            "        (_ ' ( `  )_  .__)\r\n" + //
+                            "      ( (  (    )   `)  ) _)\r\n" + //
+                            "     (__ (_   (_ . _) _) ,__)\r\n" + //
+                            "         `~~`\\ ' . /`~~`\r\n" + //
+                            "              ;   ;\r\n" + //
+                            "              /   \\\r\n" + //
+                            "_____________/_ __ \\_____________");
+                    System.out.println("\nBoom! You hit a mine. Game Over!\n");
+                    losses++;
+                    updateWinLossToFile();
+                    break;
+                }
+                revealSquare(row, col);
+            } else if (action.equals("F")) {
+                // Implement flagging functionality
+                board.getGrid()[row][acceptableChars.indexOf(col)].toggleFlag();
+            }
 
             // Check for win condition
             if (safeSquaresRemaining == 0) {
@@ -119,6 +136,8 @@ public class Game {
                 Square square = board.getGrid()[i][j];
                 if (square.isRevealed()) {
                     System.out.print(square.getAdjacentBombs() + " ");
+                } else if (square.isFlagged()) {
+                    System.out.print("X ");
                 } else {
                     System.out.print("- ");
                 }
