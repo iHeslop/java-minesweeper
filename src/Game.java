@@ -1,4 +1,3 @@
-// Game.java
 package src;
 
 public class Game {
