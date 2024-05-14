@@ -1,12 +1,6 @@
 // Game.java
 package src;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-
 public class Game {
     private Board board;
     String acceptableChars;
@@ -15,40 +9,21 @@ public class Game {
     int bombAmount;
     int wins;
     int losses;
-    File winLossFile;
+    FileHandler fileHandler;
 
     public Game(int width, int bombAmount, InputInterface inputInterface) {
         this.board = new Board(width, bombAmount);
         this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
         this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
         this.inputInterface = inputInterface;
-        this.winLossFile = new File("winloss.txt");
-        readWinLossFromFile();
-    }
-
-    private void readWinLossFromFile() {
-        try {
-            Scanner fileScanner = new Scanner(winLossFile);
-            String winsLine = fileScanner.nextLine();
-            String lossesLine = fileScanner.nextLine();
-            wins = Integer.parseInt(winsLine.split(": ")[1]);
-            losses = Integer.parseInt(lossesLine.split(": ")[1]);
-            fileScanner.close();
-        } catch (FileNotFoundException e) {
-            wins = 0;
-            losses = 0;
-        }
+        this.fileHandler = new FileHandler("results.txt");
+        int[] winLossData = fileHandler.readWinLossFromFile();
+        this.wins = winLossData[0];
+        this.losses = winLossData[1];
     }
 
     private void updateWinLossToFile() {
-        try {
-            FileWriter fileWriter = new FileWriter(winLossFile);
-            fileWriter.write("Total wins: " + wins + "\n");
-            fileWriter.write("Total losses: " + losses);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fileHandler.updateWinLossToFile(wins, losses);
     }
 
     public void playGame() {
