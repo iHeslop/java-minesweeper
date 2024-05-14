@@ -1,3 +1,5 @@
+package src;
+
 public class Square {
     private boolean hasBomb;
     private boolean revealed;

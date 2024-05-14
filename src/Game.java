@@ -1,23 +1,27 @@
-import java.util.Scanner;
+// Game.java
+package src;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
-public class Minesweeper {
+public class Game {
     private Board board;
-    private Scanner scanner;
     String acceptableChars;
     int safeSquaresRemaining;
+    InputInterface inputInterface;
+    int bombAmount;
     int wins;
     int losses;
     File winLossFile;
 
-    public Minesweeper(int width, int bombAmount) {
+    public Game(int width, int bombAmount, InputInterface inputInterface) {
         this.board = new Board(width, bombAmount);
-        this.scanner = new Scanner(System.in);
         this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
         this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
+        this.inputInterface = inputInterface;
         this.winLossFile = new File("winloss.txt");
         readWinLossFromFile();
     }
@@ -48,37 +52,26 @@ public class Minesweeper {
     }
 
     public void playGame() {
-
         while (true) {
             printGrid();
 
             // Loop for column coordinate input
-            String col;
-            while (true) {
-                System.out.print("Enter column coordinate (letters): ");
-                col = scanner.nextLine();
-                if (!acceptableChars.contains(col.toUpperCase())) {
-                    System.out.println("Invalid coordinate. Please try again.");
-                } else {
-                    break;
-                }
-            }
+            String col = inputInterface.getInputString("\nEnter column coordinate (letters): ");
 
             // Loop for row coordinate input
-            int row;
-            while (true) {
-                System.out.print("Enter row coordinate (numbers): ");
-                row = Integer.parseInt(scanner.nextLine());
-                if (row < 0 || row >= board.getWidth()) {
-                    System.out.println("Invalid coordinate. Please try again.");
-                } else {
-                    break;
-                }
-            }
+            int row = inputInterface.getInputInt("\nEnter row coordinate (numbers): ");
 
             // Check for loss condition
             if (board.getGrid()[row][acceptableChars.indexOf(col)].hasBomb()) {
-                System.out.println("Boom! You hit a mine. Game Over!");
+                System.out.println("\n          _ ._  _ , _ ._\r\n" + //
+                        "        (_ ' ( `  )_  .__)\r\n" + //
+                        "      ( (  (    )   `)  ) _)\r\n" + //
+                        "     (__ (_   (_ . _) _) ,__)\r\n" + //
+                        "         `~~`\\ ' . /`~~`\r\n" + //
+                        "              ;   ;\r\n" + //
+                        "              /   \\\r\n" + //
+                        "_____________/_ __ \\_____________");
+                System.out.println("\nBoom! You hit a mine. Game Over!\n");
                 losses++;
                 updateWinLossToFile();
                 break;
@@ -87,18 +80,25 @@ public class Minesweeper {
 
             // Check for win condition
             if (safeSquaresRemaining == 0) {
-                System.out.println("Congratulations! You've won the game!");
+                System.out.println("\r\n" + //
+                        " __  __  ______  __  __       __     __  __  __   __    \r\n" + //
+                        "/\\ \\_\\ \\/\\  __ \\/\\ \\/\\ \\     /\\ \\  _ \\ \\/\\ \\/\\ \"-.\\ \\   \r\n" + //
+                        "\\ \\____ \\ \\ \\/\\ \\ \\ \\_\\ \\    \\ \\ \\/ \".\\ \\ \\ \\ \\ \\-.  \\  \r\n" + //
+                        " \\/\\_____\\ \\_____\\ \\_____\\    \\ \\__/\".~\\_\\ \\_\\ \\_\\\\\"\\_\\ \r\n" + //
+                        "  \\/_____/\\/_____/\\/_____/     \\/_/   \\/_/\\/_/\\/_/ \\/_/ \r\n" + //
+                        "                                                        \r\n" + //
+                        "");
+                System.out.println("\nCongratulations! You've won the game!\n");
                 wins++;
                 updateWinLossToFile();
                 break;
             }
         }
-        scanner.close();
     }
 
     // Print grid to console
     private void printGrid() {
-        System.out.print("  ");
+        System.out.print("\n  ");
         for (int i = 0; i < acceptableChars.length(); i++) {
             System.out.print(acceptableChars.charAt(i) + " ");
         }
@@ -115,6 +115,7 @@ public class Minesweeper {
             }
             System.out.println();
         }
+        System.out.print("\nSafe squares Remaining: " + safeSquaresRemaining + "\n");
     }
 
     // Check square method to check reveal square content
@@ -137,38 +138,5 @@ public class Minesweeper {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        // Added user ability to choose game size and bomb amount
-        Scanner scanner = new Scanner(System.in);
-
-        int width;
-        while (true) {
-            System.out.print("Enter the width of the board (max. 26): ");
-            width = scanner.nextInt();
-            if (width <= 0 || width > 26) {
-                System.out.println("Width must be between 1 and 26. Please try again.");
-            } else {
-                break;
-            }
-        }
-
-        int maxBombs = width * width - 1;
-        int bombAmount;
-
-        while (true) {
-            System.out.print("Enter the number of bombs (max. " + maxBombs + "): ");
-            bombAmount = scanner.nextInt();
-            if (bombAmount <= 0 || bombAmount > maxBombs) {
-                System.out.println("Number of bombs must be between 1 and " + maxBombs + ". Please try again.");
-            } else {
-                break;
-            }
-        }
-
-        Minesweeper game = new Minesweeper(width, bombAmount);
-        game.playGame();
-        scanner.close();
     }
 }
