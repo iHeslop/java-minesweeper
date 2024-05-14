@@ -11,10 +11,7 @@ public class Game {
     int losses;
     FileHandler fileHandler;
 
-    public Game(int width, int bombAmount, InputInterface inputInterface) {
-        this.board = new Board(width, bombAmount);
-        this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
-        this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
+    public Game(InputInterface inputInterface) {
         this.inputInterface = inputInterface;
         this.fileHandler = new FileHandler("results.txt");
         int[] winLossData = fileHandler.readWinLossFromFile();
@@ -26,7 +23,28 @@ public class Game {
         fileHandler.updateWinLossToFile(wins, losses);
     }
 
-    public void playGame() {
+    public int startMenu() {
+        System.out.println("\nMenu:");
+        System.out.println("1. View Results");
+        System.out.println("2. Play Minesweeper");
+        System.out.println("3. Exit");
+
+        return inputInterface.getInputInt("Enter your choice: ");
+    }
+
+    public void viewResults() {
+        System.out.println("\n-------------------------------------------");
+        System.out.println("Results:");
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
+        System.out.println("-------------------------------------------");
+    }
+
+    // Play Game Functionality
+    public void playGame(int width, int bombAmount) {
+        this.board = new Board(width, bombAmount);
+        this.acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, width);
+        this.safeSquaresRemaining = board.getWidth() * board.getWidth() - board.getBombAmount();
         while (true) {
             System.out.println("\n-------------------------------------------");
             printGrid();
@@ -81,7 +99,7 @@ public class Game {
                         "  \\/_____/\\/_____/\\/_____/     \\/_/   \\/_/\\/_/\\/_/ \\/_/ \r\n" + //
                         "                                                        \r\n" + //
                         "");
-                System.out.println("\nCongratulations! You've won the game!\n");
+                System.out.println("Congratulations! You've won the game!\n");
                 wins++;
                 updateWinLossToFile();
                 break;

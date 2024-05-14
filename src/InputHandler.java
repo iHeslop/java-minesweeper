@@ -11,14 +11,27 @@ public class InputHandler implements InputInterface {
 
     @Override
     public String getInputString(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine().toUpperCase();
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            if (!input.matches(".*\\d.*")) { // Check if input contains any digits - regex fancy ooh la la
+                return input.toUpperCase();
+            } else {
+                System.out.println("Invalid input. Please enter a valid string.");
+            }
+        }
     }
 
     @Override
     public int getInputInt(String prompt) {
-        System.out.print(prompt);
-        return Integer.parseInt(scanner.nextLine());
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+            }
+        }
     }
 
     public void closeScanner() {
